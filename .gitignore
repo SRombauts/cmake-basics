@@ -5,3 +5,6 @@ CMakeCache.txt
 Tutorial
 libMathFunctions.a
 *~
+Debug
+Release
+build

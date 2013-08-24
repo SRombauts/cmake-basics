@@ -1,7 +1,7 @@
 // A simple program that computes the square root of a number
 #include <iostream>
 #include <cstdlib>
-#include "MathFunctions/mysqrt.h"
+#include "mysqrt.h"
 
 int main (int argc, char *argv[])
 {

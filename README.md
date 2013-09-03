@@ -2,6 +2,7 @@ SQLiteC++
 ---------
 
 ![cmake-basics build status](https://api.travis-ci.org/SRombauts/cmake-basics.png "cmake-basics build status")
+
 Code from the CMakeTutorial (http://www.cmake.org/cmake/help/cmake_tutorial.html)
 
 Used to test the Travis CI (https://travis-ci.org/) Continuous Integration community service.
@@ -39,4 +40,11 @@ cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
 cmake --build . # make
 ctest .         # make test
 ```
+
+### Continuous Integration
+
+This project is continuously tested under Ubuntu Linux with the gcc and clang compilers
+using the Travis CI community service with the above CMake building and testing procedure.
+
+Matrix of results can be seen online: https://travis-ci.org/SRombauts/cmake-basics
 

@@ -1,0 +1,33 @@
+name: Clang Format Check
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Clang Format
+        run: |
+          sudo apt-get update
+          sudo apt-get install clang-format
+          
+      - name: Format Code
+        run: |
+          # Format all C++ files in the repository
+          find . -name "*.cpp" -o -name "*.hpp" | xargs clang-format -i
+
+      - name: Commit Changes
+        run: |
+          git config --local user.email "mangasteak@gmail.com"
+          git config --local user.name "CI Bot"
+          git add .
+          git diff-index --quiet HEAD || git commit -m "Apply clang-format"

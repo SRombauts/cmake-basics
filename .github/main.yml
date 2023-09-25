@@ -1,0 +1,57 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+      - dev
+    
+jobs:
+  cmake_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      
+      - name: Install Dependencies
+        run: |
+          chmod +x installer.sh
+          ./installer.sh
+                
+      - name: Configure and Build with CMake
+        run: |
+            mkdir build
+            cd build
+            cmake ..
+            make
+      
+  include_doxygen_check:
+    runs-on: ubuntu-latest
+    needs: cmake_build
+    steps:
+      - name: Include Doxygen Check
+        uses: ./doxygen_check.yml
+      
+  include_clang_format_check:
+    runs-on: ubuntu-latest
+    needs: cmake_build
+    steps:
+      - name: Include Clang Format Check
+        uses: ./clang_format_check.yml
+  display_compilation_error:
+    runs-on: ubuntu-latest
+    needs: cmake_build
+    steps:
+      - name: Display Compilation Error
+        run: |
+          # Check if compilation produced any errors
+          if [ -n "$(grep -i 'error' build.log)" ]; then
+          echo "Compilation errors detected:"
+          grep -i 'error' build.log
+          exit 1
+          else
+            echo "No compilation errors detected."
+          fi
